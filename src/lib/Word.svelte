@@ -2,15 +2,16 @@
 	import { audioLink, extractSentence, type WordDef } from './types'
 
 	export let word: [string, WordDef[]]
-	let def = word[1][0]
-	let meanings = word[1]
+	const def = word[1][0]
+	const meanings = word[1]
 		.filter(w => w.shortdef.length > 0 && w.shortdef[0].length > 10)
 		.slice(0, 3)
 		.map(meaning => ({
 			func: meaning.fl,
 			shortdef: meaning.shortdef.at(0),
-			sentence: extractSentence(meaning).at(0),
+			sentence: extractSentence(meaning).at(0)
 		}))
+	const audio = audioLink(def)
 </script>
 
 <div class="flex max-w-md flex-col rounded-xl border border-slate-200 p-3 shadow-sm">
@@ -19,9 +20,12 @@
 		<span class="font-mono text-sm font-light italic text-slate-600">
 			{def.hwi.prs?.[0].ipa ?? def.hwi.hw}
 		</span>
-		<!-- play audio from link -->
-		{#if audioLink(def)}
-			<audio src={audioLink(def)} controls class="w-full" />
+		{#if audio}
+			<audio controls class="w-full">
+				{#each Object.entries(audio) as [type, src]}
+					<source {src} {type} />
+				{/each}
+			</audio>
 		{/if}
 	</h2>
 
