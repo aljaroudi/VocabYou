@@ -15,7 +15,6 @@ async function callAPI(phrase: string): Promise<WordDef[]> {
 		`https://www.dictionaryapi.com/api/v3/references/learners/json/${phrase}?key=${DICT_KEY}`
 	)
 		.then(res => res.json() as Promise<WordDef[]>)
-		.then(def => def)
 		.catch(err => {
 			console.error('callAPI', err)
 			return []
