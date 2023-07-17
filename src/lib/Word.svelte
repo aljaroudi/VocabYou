@@ -31,7 +31,7 @@
 
 	<ul class="list-inside list-disc text-sm text-slate-800">
 		{#each meanings as { func, shortdef, sentence }}
-			<li class="my-3 list-none rounded-md border border-slate-100 bg-slate-50 px-1 shadow-sm">
+			<li class="my-3 list-none rounded-xl border border-slate-100 bg-slate-50 px-1 shadow-sm">
 				{#if func}
 					<p class="py-1 text-xs italic text-slate-500">{func}</p>
 				{/if}
