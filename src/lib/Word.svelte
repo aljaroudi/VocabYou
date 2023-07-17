@@ -14,10 +14,12 @@
 	const audio = audioLink(def)
 </script>
 
-<div class="flex max-w-md flex-col rounded-xl border border-slate-200 p-3 shadow-sm">
+<div
+	class="flex max-w-md flex-col rounded-xl border border-slate-200 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+>
 	<h2 class="text-xl font-semibold">
 		{word[0]}
-		<span class="font-mono text-sm font-light italic text-slate-600">
+		<span class="font-mono text-sm font-light italic text-slate-600 dark:text-slate-400">
 			{def.hwi.prs?.[0].ipa ?? def.hwi.hw}
 		</span>
 		{#if audio}
@@ -29,9 +31,11 @@
 		{/if}
 	</h2>
 
-	<ul class="list-inside list-disc text-sm text-slate-800">
+	<ul class="list-inside list-disc text-sm text-slate-800 dark:text-slate-100">
 		{#each meanings as { func, shortdef, sentence }}
-			<li class="my-3 list-none rounded-xl border border-slate-100 bg-slate-50 px-1 shadow-sm">
+			<li
+				class="my-3 list-none rounded-xl border border-slate-100 bg-slate-50 px-1 shadow-sm dark:border-none dark:bg-slate-800"
+			>
 				{#if func}
 					<p class="py-1 text-xs italic text-slate-500">{func}</p>
 				{/if}
@@ -39,7 +43,7 @@
 					<p class="py-1 pl-1">{shortdef}</p>
 				{/if}
 				{#if sentence}
-					<p class="py-1 pl-1 text-sm text-slate-600">‟{sentence}”</p>
+					<p class="py-1 pl-1 text-sm text-slate-600 dark:text-slate-100">‟{sentence}”</p>
 				{/if}
 			</li>
 		{/each}

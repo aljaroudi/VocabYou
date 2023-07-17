@@ -1,7 +1,7 @@
 <script>
-  import '../app.css'
+	import '../app.css'
 </script>
 
-<div class="flex flex-col w-full h-screen items-center p-2">
-    <slot />
+<div class="flex h-full w-full flex-col items-center p-2 dark:bg-slate-900">
+	<slot />
 </div>
