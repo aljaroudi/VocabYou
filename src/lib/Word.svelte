@@ -1,0 +1,31 @@
+<script lang="ts">
+	import { audioLink, extractSentence, type WordDef } from './types'
+
+	export let word: [string, WordDef[]]
+	let def = word[1][0]
+</script>
+
+<div class="flex max-w-md flex-col rounded-xl border border-slate-200 p-3 shadow-sm">
+	<h2 class="text-xl font-semibold">
+		{word[0]}
+		<span class="font-mono text-sm font-light italic text-slate-600">
+			{def.hwi.prs?.[0].ipa ?? def.hwi.hw}
+		</span>
+        <!-- play audio from link -->
+        <audio src={audioLink(def)} controls class="w-full"></audio>
+	</h2>
+
+	<ul class="list-inside list-disc text-sm text-slate-800">
+		{#each word[1]
+			.filter(w => w.shortdef.length > 0 && w.shortdef[0].length > 10)
+			.slice(0, 3) as def}
+			<li class="my-3 list-none rounded-md border border-slate-100 bg-slate-50 px-1 shadow-sm">
+				<p class="py-1 text-xs italic text-slate-500">{def.fl}</p>
+				<p class="py-1 pl-1">{def.shortdef[0]}</p>
+				{#if def.def}
+					<p class="py-1 pl-1 text-sm text-slate-600">‟{extractSentence(def)[0]}”</p>
+				{/if}
+			</li>
+		{/each}
+	</ul>
+</div>
