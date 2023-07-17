@@ -4,17 +4,16 @@
 
 	$: words = getWords()
 
-	async function handleAddWord(e: EventTarget & HTMLInputElement) {
-		const { value } = e
+	async function handleAddWord({ value }: EventTarget & HTMLInputElement) {
 		if (value.length < 2) return
-		words = await getWord(value)
-		e.value = ''
+		words = await getWord(value.toLowerCase())
+		value = ''
 	}
 </script>
 
 <input
 	type="text"
-	class="mx-auto my-2 w-full max-w-md rounded-lg border border-slate-200 px-2 py-1 text-sm shadow-sm"
+	class="mx-auto my-2 w-full max-w-md rounded-lg border border-slate-200 px-2 py-1 text-sm shadow-sm dark:border-slate-500 dark:bg-slate-900 dark:text-slate-100"
 	placeholder="Learn a new word..."
 	on:keydown={e => e.key === 'Enter' && handleAddWord(e.currentTarget)}
 />
