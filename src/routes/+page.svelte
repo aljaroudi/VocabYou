@@ -9,34 +9,28 @@
 		words = getWords()
 	})
 
-	let newWord: string
-
-	async function handleAddWord() {
+	async function handleAddWord(newWord: string) {
 		if (newWord.length < 3) return
-
 		await getWord(newWord)
 		words = getWords()
-        console.log('rerendered')
 	}
 </script>
 
-<!-- input to add a new word -->
 <div class="flex w-full gap-2">
 	<input
 		type="text"
-		class="h-8 w-full rounded-md border border-slate-200 px-2 text-sm shadow-sm"
-		placeholder="Add..."
+		class="h-8 w-full rounded-md border border-slate-200 px-2 my-2 text-sm shadow-sm"
+		placeholder="Search..."
 		name="word"
-		bind:value={newWord}
+        on:keydown={e => {
+            if (e.key !== 'Enter') return
+            const newWord = e.currentTarget?.value
+            if (newWord) handleAddWord(newWord)
+        }}
 	/>
-	<button
-		type="submit"
-		class="h-8 w-8 rounded-md bg-indigo-600 p-1 font-semibold text-white shadow-sm"
-		on:click={handleAddWord}>+</button
-	>
 </div>
 <ul>
-	{#each words as word, i}
+	{#each words as word}
 		<li class="py-2">
 			<Word {word} />
 		</li>
