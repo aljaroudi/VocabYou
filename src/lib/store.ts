@@ -8,13 +8,14 @@ function addWord(phrase: string, word: WordDef[]) {
 	verifyBrowser()
 	const words = getWords()
 	words.set(phrase, word)
-	localStorage?.setItem('words', JSON.stringify([...words].reverse()))
+	localStorage?.setItem('words', JSON.stringify([...words]))
 }
 
 export function getWords(): Map<string, WordDef[]> {
 	verifyBrowser()
 	const words = localStorage?.getItem('words')
-	return words ? new Map(JSON.parse(words)) : new Map()
+
+	return words ? new Map((JSON.parse(words) as [string, WordDef[]][]).reverse()) : new Map()
 }
 
 function getWordLocal(phrase: string): WordDef[] {
