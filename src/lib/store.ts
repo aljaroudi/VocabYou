@@ -25,7 +25,7 @@ function getWordLocal(phrase: string): WordDef[] {
 
 async function fetchWord(phrase: string): Promise<void> {
 	verifyBrowser()
-	fetch('/api?phrase=' + phrase)
+	await fetch('/api?phrase=' + phrase)
 		.then(res => res.json())
 		.then(def => addWord(phrase, def))
 		.catch(err => {
@@ -34,9 +34,8 @@ async function fetchWord(phrase: string): Promise<void> {
 		})
 }
 
-export async function getWord(phrase: string): Promise<WordDef[]> {
+export async function getWord(phrase: string): Promise<ReturnType<typeof getWords>> {
 	verifyBrowser()
-	const word = getWordLocal(phrase)
-	if (!word.length) fetchWord(phrase)
-	return word
+	if (getWordLocal(phrase).length === 0) await fetchWord(phrase)
+	return getWords()
 }
