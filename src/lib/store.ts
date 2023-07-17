@@ -7,9 +7,7 @@ function verifyBrowser(): void {
 function addWord(phrase: string, word: WordDef[]) {
 	verifyBrowser()
 	const words = getWords()
-	console.log('words', words.size)
 	words.set(phrase, word)
-	console.log('added word', words)
 	localStorage?.setItem('words', JSON.stringify([...words].reverse()))
 }
 
@@ -30,7 +28,7 @@ async function fetchWord(phrase: string): Promise<void> {
 		.then(res => res.json())
 		.then(def => addWord(phrase, def))
 		.catch(err => {
-			console.error(err)
+			console.error('fetchWord', err)
 			return []
 		})
 }
