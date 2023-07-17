@@ -1,133 +1,98 @@
 export interface WordDef {
+	/** Metadata */
 	meta: Meta
-	hom?: number
-	hwi: Hwi
+	/** Headword information */
+	hwi: {
+		/** headword */
+		hw: string
+		/** pronunciations */
+		prs?: Pronunciation[]
+	}
+	/** Functional label */
 	fl?: string
-	ins?: WordDefIn[]
-	def?: WordDefDef[]
-	dros?: Dro[]
-	usages?: Usage[]
-	et?: Array<string[]>
-	date?: string
+	/** the change of form that words undergo in different grammatical contexts, such as tense or number */
+	ins?: Inflection[]
+	/** all the sense sequences and verb dividers for */
+	def?: { sseq: unknown }[]
 	shortdef: string[]
-	uros?: Uro[]
-	lbs?: string[]
-	dxnls?: string[]
+	gram?: string
 }
 
-export interface WordDefDef {
-	vd?: string
-	sseq: Array<Array<Array<Array<Array<Sense | SseqEnum>> | PurpleSseq | SseqEnum>>>
+export interface Pronunciation {
+	ipa: string
+	/** audio playback information */
+	sound: {
+		/** base filename for audio playback */
+		audio: string
+	}
 }
-
-export interface Sense {
-	sn: string
-	dt: Array<Array<PurpleDt[] | string>>
-}
-
-export interface PurpleDt {
-	t: string
-}
-
-export type SseqEnum = 'sense' | 'pseq' | 'bs' | 'sen'
-
-export interface PurpleSseq {
-	sn?: string
-	dt?: Array<Array<Array<Array<Array<PurpleDt[] | string>> | FluffyDt> | string>>
-	sdsense?: PurpleSdsense
-	sls?: string[]
-	sense?: Sense
-	ins?: SseqIn[]
-}
-
-export interface FluffyDt {
-	t: string
-	aq?: Aq
-}
-
-export interface Aq {
-	auth: string
-}
-
-export interface SseqIn {
+/** the change of form that words undergo in different grammatical contexts, such as tense or number */
+export interface Inflection {
+	/** inflection label spelled out, like `weird*os`  */
 	if: string
-	spl: string
-}
-
-export interface PurpleSdsense {
-	sd: string
-	dt: Array<Array<PurpleDt[] | string>>
-}
-
-export interface Dro {
-	drp: string
-	def: DroDef[]
-	vrs?: VR[]
-}
-
-export interface DroDef {
-	sseq: Array<Array<Array<FluffySseq | SseqEnum>>>
-}
-
-export interface FluffySseq {
-	dt: Array<Array<PurpleDt[] | string>>
-	sn?: string
-	sdsense?: FluffySdsense
-}
-
-export interface FluffySdsense {
-	sd: string
-	dt: string[][]
-}
-
-export interface VR {
-	vl: string
-	va: string
-}
-
-export interface Hwi {
-	hw: string
-	prs?: PR[]
-}
-
-export interface PR {
-	mw: string
-	sound: Sound
-}
-
-export interface Sound {
-	audio: string
-	ref: string
-	stat: string
-}
-
-export interface WordDefIn {
-	if: string
-	prs?: PR[]
+	/** inflection label */
 	il?: string
+	/** pronunciation */
+	prs?: Pronunciation[]
 }
 
 export interface Meta {
 	id: string
-	uuid: string
-	sort: string
-	src: Src
-	section: Section
+	/** if the headword is a key part of English vocabulary */
+	highlight?: 'yes'
 	stems: string[]
+	'app-shortdef'?: AppShortdef | null
 	offensive: boolean
 }
-
-export type Section = 'alpha'
-
-export type Src = 'collegiate'
-
-export interface Uro {
-	ure: string
-	prs: PR[]
+/** [shortened view] a very abbreviated version of the entry that could be used in specialized contexts where a preview or shortened entry view is needed */
+export interface AppShortdef {
+	/** headword */
+	hw: string
+	/** functional label (noun, verb, ...) */
 	fl: string
+	/** definition text for the first three senses */
+	def: string[]
 }
 
-export interface Usage {
-	pl: string
-	pt: string[][]
+export interface Target {
+	tuuid: string
+	tsrc: string
+}
+
+export function extractSentence(word: WordDef) {
+	if (!word.def) return []
+	const sentences: string[] = []
+
+	for (const { sseq } of word.def) {
+		if (!Array.isArray(sseq)) continue
+
+		for (const sub1 of sseq) {
+			if (!Array.isArray(sub1)) continue
+
+			for (const sub2 of sub1) {
+				if (!Array.isArray(sub2) || !(sub2[0] === 'sense')) continue
+
+				const dt = sub2[1]['dt']
+				if (!Array.isArray(dt)) continue
+
+				for (const item of dt) {
+					if (!Array.isArray(item) || item[0] !== 'vis') continue
+
+					for (const { t } of item[1]) {
+						// console.log(t)
+						// remove anything between { and }
+						sentences.push(t.replace(/{.*?}/g, ''))
+					}
+				}
+			}
+		}
+	}
+	return sentences
+}
+
+export function audioLink(word: WordDef): string | undefined {
+	const audio = word.hwi.prs?.[0]?.sound?.audio
+	return audio
+		? `https://media.merriam-webster.com/audio/prons/en/us/mp3/${audio[0]}/${audio}.mp3`
+		: undefined
 }
