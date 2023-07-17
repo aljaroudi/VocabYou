@@ -1,36 +1,25 @@
 <script lang="ts">
-	import type { WordDef } from '$lib/types'
 	import Word from '$lib/Word.svelte'
 	import { getWord, getWords } from '$lib/store'
-	import { onMount } from 'svelte'
 
-	let words = new Map<string, WordDef[]>()
-	onMount(() => {
-		words = getWords()
-	})
+	$: words = getWords()
 
-	async function handleAddWord(newWord: string) {
-		if (newWord.length < 3) return
-		await getWord(newWord)
-		words = getWords()
+	async function handleAddWord(e: EventTarget & HTMLInputElement) {
+		const { value } = e
+		if (value.length < 2) return
+		words = await getWord(value)
+		e.value = ''
 	}
 </script>
 
-<div class="flex w-full gap-2">
-	<input
-		type="text"
-		class="h-8 w-full rounded-md border border-slate-200 px-2 my-2 text-sm shadow-sm"
-		placeholder="Search..."
-		name="word"
-        on:keydown={e => {
-            if (e.key !== 'Enter') return
-            const newWord = e.currentTarget?.value
-            if (newWord) handleAddWord(newWord)
-        }}
-	/>
-</div>
+<input
+	type="text"
+	class="mx-auto my-2 w-full max-w-md rounded-lg border border-slate-200 px-2 py-1 text-sm shadow-sm"
+	placeholder="Learn a new word..."
+	on:keydown={e => e.key === 'Enter' && handleAddWord(e.currentTarget)}
+/>
 <ul>
-	{#each words as word}
+	{#each Array.from(words).slice() as word}
 		<li class="py-2">
 			<Word {word} />
 		</li>
