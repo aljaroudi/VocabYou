@@ -1,0 +1,9 @@
+{
+	"name": "VocabYou",
+	"short_name": "VocabYou",
+	"display": "standalone",
+	"start_url": "/",
+	"theme_color": "#E0E0E0",
+	"background_color": "#ffffff",
+	"icons": []
+}
