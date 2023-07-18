@@ -2,8 +2,8 @@
 	import { audioLink, extractSentence, type WordDef } from './types'
 
 	export let word: [string, WordDef[]]
-	const def = word[1][0]
-	const meanings = word[1]
+	const [phrase, defs] = word
+	const meanings = defs
 		.filter(w => w.shortdef.length > 0 && w.shortdef[0].length > 10)
 		.slice(0, 3)
 		.map(meaning => ({
@@ -11,16 +11,17 @@
 			shortdef: meaning.shortdef.at(0),
 			sentence: extractSentence(meaning).at(0)
 		}))
-	const audio = audioLink(def)
+	const audio = audioLink(defs[0])
+	const pronunciation = defs[0].hwi.prs?.[0].ipa ?? defs[0].hwi.hw
 </script>
 
 <div
-	class="flex max-w-md flex-col rounded-xl border border-slate-200 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+	class="flex max-w-md flex-col rounded-2xl border border-slate-200 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
 >
 	<h2 class="text-xl font-semibold">
-		{word[0]}
+		{phrase}
 		<span class="font-mono text-sm font-light italic text-slate-600 dark:text-slate-400">
-			{def.hwi.prs?.[0].ipa ?? def.hwi.hw}
+			{pronunciation}
 		</span>
 		{#if audio}
 			<audio controls class="w-full">
@@ -31,10 +32,10 @@
 		{/if}
 	</h2>
 
-	<ul class="list-inside list-disc text-sm text-slate-800 dark:text-slate-100">
+	<ul class="list-inside list-disc pb-1 text-sm text-slate-800 dark:text-slate-100">
 		{#each meanings as { func, shortdef, sentence }}
 			<li
-				class="my-3 list-none rounded-xl border border-slate-100 bg-slate-50 px-1 shadow-sm dark:border-none dark:bg-slate-800"
+				class="mt-3 list-none rounded-xl border border-slate-100 bg-slate-50 px-1 shadow-sm dark:border-none dark:bg-slate-800"
 			>
 				{#if func}
 					<p class="py-1 text-xs italic text-slate-500">{func}</p>
