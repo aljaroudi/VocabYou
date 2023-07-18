@@ -6,6 +6,7 @@ function verifyBrowser(): void {
 
 function addWord(phrase: string, word: WordDef[]) {
 	verifyBrowser()
+	if (word.length === 0) return
 	const words = getWords()
 	words.set(phrase, word)
 	localStorage?.setItem('words', JSON.stringify([...words]))
