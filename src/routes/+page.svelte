@@ -18,7 +18,7 @@
 	on:keydown={e => e.key === 'Enter' && handleAddWord(e.currentTarget)}
 />
 <ul>
-	{#each Array.from(words).slice() as word}
+	{#each Array.from(words).slice() as word, key (word[0])}
 		<li class="py-2">
 			<Word {word} />
 		</li>
