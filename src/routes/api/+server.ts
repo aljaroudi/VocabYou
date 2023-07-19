@@ -2,7 +2,7 @@ import type { WordDef } from '$lib/types'
 import { json } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 import { DICT_KEY } from '$env/static/private'
-import { fetchKV, storeKV } from '$lib/kv'
+import { fetchKV, storeKV } from '$lib/kv.server'
 
 export const GET: RequestHandler = async ({ url: { searchParams } }) => {
 	const phrase = searchParams.get('phrase')
