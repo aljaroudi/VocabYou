@@ -16,7 +16,7 @@
 </script>
 
 <div
-	class="flex max-w-md flex-col rounded-2xl border border-slate-200 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+	class="mb-2 flex max-w-md flex-col rounded-2xl border border-slate-200 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
 >
 	<h2 class="flex items-center px-1 text-xl font-semibold">
 		{phrase}
