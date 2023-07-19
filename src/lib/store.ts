@@ -28,7 +28,10 @@ async function fetchWord(phrase: string): Promise<void> {
 	verifyBrowser()
 	await fetch('/api?phrase=' + phrase)
 		.then(res => res.json())
-		.then(def => addWord(phrase, def))
+		.then(def => {
+			if (typeof def[0][0] === 'string') return
+			addWord(phrase, def)
+		})
 		.catch(err => {
 			console.error('fetchWord', err)
 			return []
