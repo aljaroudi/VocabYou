@@ -13,29 +13,29 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.1.0",
-		"@sveltejs/kit": "^1.22.4",
-		"@typescript-eslint/eslint-plugin": "^6.2.1",
-		"@typescript-eslint/parser": "^6.2.1",
+		"@sveltejs/kit": "^1.22.6",
+		"@typescript-eslint/eslint-plugin": "^6.4.0",
+		"@typescript-eslint/parser": "^6.4.0",
 		"@vite-pwa/sveltekit": "^0.2.5",
-		"autoprefixer": "^10.4.14",
+		"autoprefixer": "^10.4.15",
 		"cssnano": "^6.0.1",
-		"eslint": "^8.46.0",
-		"eslint-config-prettier": "^8.10.0",
+		"eslint": "^8.47.0",
+		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.32.4",
-		"postcss": "^8.4.27",
-		"prettier": "^3.0.1",
+		"postcss": "^8.4.28",
+		"prettier": "^3.0.2",
 		"prettier-plugin-svelte": "^3.0.3",
-		"prettier-plugin-tailwindcss": "^0.4.1",
-		"svelte": "^4.1.2",
-		"svelte-check": "^3.4.6",
+		"prettier-plugin-tailwindcss": "^0.5.3",
+		"svelte": "^4.2.0",
+		"svelte-check": "^3.5.0",
 		"tailwindcss": "^3.3.3",
 		"tslib": "^2.6.1",
 		"typescript": "^5.1.6",
-		"vite": "^4.4.8"
+		"vite": "^4.4.9"
 	},
 	"type": "module",
 	"dependencies": {
-		"@google-cloud/translate": "^7.2.2",
+		"@google-cloud/translate": "^8.0.1",
 		"@vercel/kv": "^0.2.2"
 	}
 }
