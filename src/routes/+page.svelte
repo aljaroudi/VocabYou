@@ -36,12 +36,12 @@
 <div class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-slate-100">
 	<input
 		type="text"
-		class="w-full rounded-lg border border-slate-200 px-2 shadow-sm dark:border-slate-500 dark:bg-slate-900"
+		class="w-full rounded-lg border border-slate-200 px-2 shadow-xs dark:border-slate-500 dark:bg-slate-900"
 		placeholder="Learn a new word..."
 		on:keydown={e => e.key === 'Enter' && handleAddWord(e.currentTarget)}
 	/>
 	<select
-		class="rounded-lg border border-slate-200 px-2 shadow-sm dark:border-slate-500 dark:bg-slate-900"
+		class="rounded-lg border border-slate-200 px-2 shadow-xs dark:border-slate-500 dark:bg-slate-900"
 		bind:value={targetLang}
 	>
 		{#each langs as [value, label]}

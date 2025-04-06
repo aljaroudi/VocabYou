@@ -16,7 +16,7 @@
 </script>
 
 <div
-	class="mb-2 flex max-w-md flex-col rounded-2xl border border-slate-200 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+	class="mb-2 flex max-w-md flex-col rounded-2xl border border-slate-200 p-3 shadow-xs dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
 >
 	<h2 class="flex items-center px-1 text-xl font-semibold">
 		{phrase}
@@ -42,7 +42,7 @@
 	<ul class="list-inside list-disc pb-1 text-sm text-slate-800 dark:text-slate-100">
 		{#each meanings as { func, shortdef, sentence }}
 			<li
-				class="mt-3 list-none rounded-xl border border-slate-100 bg-slate-50 px-1 shadow-sm dark:border-none dark:bg-slate-800"
+				class="mt-3 list-none rounded-xl border border-slate-100 bg-slate-50 px-1 shadow-xs dark:border-none dark:bg-slate-800"
 			>
 				{#if func}
 					<p class="py-1 text-xs italic text-slate-500">{func}</p>
