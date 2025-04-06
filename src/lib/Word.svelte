@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { audioLink, extractSentence, type WordDef } from './types'
 
-	export let word: readonly [string, WordDef[], string | undefined]
+	interface Props {
+		word: readonly [string, WordDef[], string | undefined]
+	}
+
+	let { word }: Props = $props()
 	const [phrase, defs, translated] = word
 	const meanings = defs
 		.filter(w => w.shortdef.length > 0 && w.shortdef[0].length > 10)

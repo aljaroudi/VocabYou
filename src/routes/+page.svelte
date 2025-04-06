@@ -3,8 +3,8 @@
 	import { getWord, getWords } from '$lib/store'
 	import langs from '$lib/langs.json'
 
-	$: words = getWords()
-	let targetLang: string
+	let words = $derived(getWords())
+	let targetLang = $state<string>()
 
 	async function handleAddWord({ value }: EventTarget & HTMLInputElement) {
 		if (value.length < 2) return
@@ -25,7 +25,7 @@
 			})
 	}
 
-	async function translated(_words: typeof words, targetLang: string = 'ar') {
+	async function translated(_words: typeof words) {
 		const array = Array.from(_words)
 		const texts = array.map(([word]) => word)
 		const translated = await translate(texts)
@@ -38,7 +38,7 @@
 		type="text"
 		class="w-full rounded-lg border border-slate-200 px-2 shadow-xs dark:border-slate-500 dark:bg-slate-900"
 		placeholder="Learn a new word..."
-		on:keydown={e => e.key === 'Enter' && handleAddWord(e.currentTarget)}
+		onkeydown={e => e.key === 'Enter' && handleAddWord(e.currentTarget)}
 	/>
 	<select
 		class="rounded-lg border border-slate-200 px-2 shadow-xs dark:border-slate-500 dark:bg-slate-900"
@@ -51,7 +51,7 @@
 </div>
 <ul>
 	{#if words.size > 0}
-		{#await translated(words, targetLang)}
+		{#await translated(words)}
 			<li>Loading...</li>
 		{:then words}
 			{#each words as word}
