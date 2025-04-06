@@ -79,7 +79,6 @@ export function extractSentence(word: WordDef) {
 					if (!Array.isArray(item) || item[0] !== 'vis') continue
 
 					for (const { t } of item[1]) {
-						// console.log(t)
 						// remove anything between { and }
 						sentences.push(t.replace(/{.*?}/g, ''))
 					}
@@ -92,11 +91,10 @@ export function extractSentence(word: WordDef) {
 
 export function audioLink(word: WordDef) {
 	const audio = word.hwi.prs?.[0]?.sound?.audio
-	return audio
-		? {
-				'audio/mp3': `https://media.merriam-webster.com/audio/prons/en/us/mp3/${audio[0]}/${audio}.mp3`,
-				'audio/wav': `https://media.merriam-webster.com/audio/prons/en/us/wav/${audio[0]}/${audio}.wav`,
-				'audio/ogg': `https://media.merriam-webster.com/audio/prons/en/us/ogg/${audio[0]}/${audio}.ogg`
-		  }
-		: undefined
+	if (!audio) return undefined
+	return {
+		'audio/mp3': `https://media.merriam-webster.com/audio/prons/en/us/mp3/${audio[0]}/${audio}.mp3`,
+		'audio/wav': `https://media.merriam-webster.com/audio/prons/en/us/wav/${audio[0]}/${audio}.wav`,
+		'audio/ogg': `https://media.merriam-webster.com/audio/prons/en/us/ogg/${audio[0]}/${audio}.ogg`
+	}
 }
