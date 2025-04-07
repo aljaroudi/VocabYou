@@ -6,6 +6,7 @@
 
 	let words = new SvelteMap<string, APIResponse>()
 	let targetLang = $state('es')
+	let loading = $state(false)
 
 	if (typeof localStorage !== 'undefined') {
 		const stored = localStorage.getItem('words')
@@ -34,6 +35,7 @@
 			const text = e.currentTarget.value.trim()
 			if (!text || text.length < 2) return
 
+			loading = true
 			void fetch(`/api?phrase=${text}&target=${targetLang}`)
 				.then(res => res.json())
 				.then(data => {
@@ -41,6 +43,7 @@
 					;(e.target as HTMLInputElement).value = ''
 				})
 				.catch(() => alert('Failed'))
+				.finally(() => (loading = false))
 		}}
 	/>
 	<select
@@ -53,11 +56,13 @@
 	</select>
 </div>
 <ul>
-	{#if words.size > 0}
-		{#each words as [phrase, word]}
-			<Word {phrase} {word} />
-		{/each}
-	{:else}
+	{#if loading}
+		<li class="text-center">Loading...</li>
+	{/if}
+	{#each [...words].reverse() as [phrase, word]}
+		<Word {phrase} {word} />
+	{/each}
+	{#if words.size === 0 && !loading}
 		<li class="text-center">Add a word to get started</li>
 	{/if}
 </ul>
