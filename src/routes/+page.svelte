@@ -1,47 +1,53 @@
 <script lang="ts">
 	import Word from '$lib/Word.svelte'
-	import { getWord, getWords } from '$lib/store'
 	import langs from '$lib/langs.json'
+	import type { APIResponse } from '$lib/types'
+	import { SvelteMap } from 'svelte/reactivity'
 
-	$: words = getWords()
-	let targetLang: string
+	let words = new SvelteMap<string, APIResponse>()
+	let targetLang = $state('es')
+	let loading = $state(false)
 
-	async function handleAddWord({ value }: EventTarget & HTMLInputElement) {
-		if (value.length < 2) return
-		words = await getWord(value.toLowerCase().trim())
-		value = ''
-	}
-
-	async function translate(texts: string[]): Promise<string[] | null> {
-		return await fetch(`/api/translate?texts=${texts.join(',')}&target=${targetLang}`)
-			.then(res => res.json())
-			.then(res => {
-				if (!Array.isArray(res) || typeof res[0] !== 'string') return null
-				return res.length === texts.length ? (res as string[]) : null
-			})
-			.catch(err => {
-				console.error(err)
-				return null
-			})
-	}
-
-	async function translated(_words: typeof words, targetLang: string = 'ar') {
-		const array = Array.from(_words)
-		const texts = array.map(([word]) => word)
-		const translated = await translate(texts)
-		return array.map(([word, defs], i) => [word, defs, translated?.at(i)] as const)
+	if (typeof localStorage !== 'undefined') {
+		const stored = localStorage.getItem('words')
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored)
+				for (const [key, value] of Object.entries(parsed)) {
+					words.set(key, value as APIResponse)
+				}
+			} catch {}
+		}
+		$effect(() => {
+			const obj = Object.fromEntries(words)
+			localStorage.setItem('words', JSON.stringify(obj))
+		})
 	}
 </script>
 
-<div class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-slate-100">
+<div class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-stone-100">
 	<input
 		type="text"
-		class="w-full rounded-lg border border-slate-200 px-2 shadow-sm dark:border-slate-500 dark:bg-slate-900"
+		class="w-full rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
 		placeholder="Learn a new word..."
-		on:keydown={e => e.key === 'Enter' && handleAddWord(e.currentTarget)}
+		onkeydown={e => {
+			if (e.key !== 'Enter') return
+			const text = e.currentTarget.value.trim()
+			if (!text || text.length < 2) return
+
+			loading = true
+			void fetch(`/api?phrase=${text}&target=${targetLang}`)
+				.then(res => res.json())
+				.then(data => {
+					words.set(text, data as APIResponse)
+					;(e.target as HTMLInputElement).value = ''
+				})
+				.catch(() => alert('Failed'))
+				.finally(() => (loading = false))
+		}}
 	/>
 	<select
-		class="rounded-lg border border-slate-200 px-2 shadow-sm dark:border-slate-500 dark:bg-slate-900"
+		class="rounded-lg border border-stone-200 px-2 shadow-xs dark:border-stone-500 dark:bg-stone-900"
 		bind:value={targetLang}
 	>
 		{#each langs as [value, label]}
@@ -50,17 +56,13 @@
 	</select>
 </div>
 <ul>
-	{#if words.size > 0}
-		{#await translated(words, targetLang)}
-			<li>Loading...</li>
-		{:then words}
-			{#each words as word}
-				<Word {word} />
-			{/each}
-		{:catch error}
-			<li>{error.message}</li>
-		{/await}
-	{:else}
-		<li class="text-center">it's mt...</li>
+	{#if loading}
+		<li class="text-center">Loading...</li>
+	{/if}
+	{#each [...words].reverse() as [phrase, word]}
+		<Word {phrase} {word} />
+	{/each}
+	{#if words.size === 0 && !loading}
+		<li class="text-center">Add a word to get started</li>
 	{/if}
 </ul>

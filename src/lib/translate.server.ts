@@ -10,7 +10,7 @@ const translator = new GCP.Translate({ key })
  * @returns translated text
  */
 export async function translate(text: string[], target: string): Promise<string[] | null> {
-	return await translator
+	return translator
 		.translate(text, target)
 		.then(([translation]) => translation)
 		.catch(() => null)
