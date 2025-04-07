@@ -47,7 +47,7 @@
 		}}
 	/>
 	<select
-		class="rounded-lg border border-stone-200 px-2 shadow-xs dark:border-stone-500 dark:bg-stone-900"
+		class="rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
 		bind:value={targetLang}
 	>
 		{#each langs as [value, label]}
