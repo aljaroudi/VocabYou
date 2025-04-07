@@ -30,7 +30,7 @@
 		type="text"
 		class="w-full rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
 		placeholder="Learn a new word..."
-		onkeydown={e => {
+		onkeydown={async e => {
 			if (e.key !== 'Enter') return
 			const text = e.currentTarget.value.trim()
 			if (!text || text.length < 2) return
@@ -38,12 +38,14 @@
 			loading = true
 			void fetch(`/api?phrase=${text}&target=${targetLang}`)
 				.then(res => res.json())
-				.then(data => {
-					words.set(text, data as APIResponse)
-					;(e.target as HTMLInputElement).value = ''
+				.then((data: APIResponse) => {
+					words.set(text, data)
 				})
 				.catch(() => alert('Failed'))
-				.finally(() => (loading = false))
+
+			e.currentTarget.value = ''
+			e.currentTarget.blur()
+			loading = false
 		}}
 	/>
 	<select
@@ -59,7 +61,7 @@
 	{#if loading}
 		<li class="text-center">Loading...</li>
 	{/if}
-	{#each [...words].reverse() as [phrase, word]}
+	{#each [...words].reverse() as [phrase, word] (phrase)}
 		<Word {phrase} {word} />
 	{/each}
 	{#if words.size === 0 && !loading}
