@@ -58,3 +58,8 @@ export type Target = {
 	tuuid: string
 	tsrc: string
 }
+
+type APIResponse = {
+	def: WordDef[]
+	translated: string[] | null
+}
