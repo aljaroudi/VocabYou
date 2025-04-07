@@ -6,6 +6,22 @@
 
 	let words = new SvelteMap<string, APIResponse>()
 	let targetLang = $state('es')
+
+	if (typeof localStorage !== 'undefined') {
+		const stored = localStorage.getItem('words')
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored)
+				for (const [key, value] of Object.entries(parsed)) {
+					words.set(key, value as APIResponse)
+				}
+			} catch {}
+		}
+		$effect(() => {
+			const obj = Object.fromEntries(words)
+			localStorage.setItem('words', JSON.stringify(obj))
+		})
+	}
 </script>
 
 <div class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-slate-100">
