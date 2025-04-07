@@ -22,7 +22,7 @@
 	<h2 class="flex items-center px-1 text-xl font-semibold">
 		{phrase}
 		<span class="font-mono text-sm font-light italic text-stone-600 dark:text-stone-400">
-			{pronunciation}
+			&nbsp;{pronunciation}
 		</span>
 
 		{#if translated}
