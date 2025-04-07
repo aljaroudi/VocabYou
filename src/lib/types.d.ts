@@ -1,3 +1,5 @@
+import type { translate } from './translate.server'
+
 export type WordDef = {
 	/** Metadata */
 	meta: Meta
@@ -61,5 +63,5 @@ export type Target = {
 
 type APIResponse = {
 	def: WordDef[]
-	translated: string | null
+	translated: Awaited<ReturnType<typeof translate>>
 }
