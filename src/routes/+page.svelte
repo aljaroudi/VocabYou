@@ -2,11 +2,32 @@
 	import Word from '$lib/Word.svelte'
 	import langs from '$lib/langs.json'
 	import type { APIResponse } from '$lib/types'
+	import { onMount } from 'svelte'
 	import { SvelteMap } from 'svelte/reactivity'
 
 	let words = new SvelteMap<string, APIResponse>()
 	let targetLang = $state('es')
 	let loading = $state(false)
+
+	function getLang() {
+		if (typeof navigator === 'undefined') return null
+		const browserLang = navigator.language.split('-')[0]
+		if (langs.some(([key]) => key === browserLang)) return browserLang
+		return null
+	}
+
+	onMount(() => {
+		if (typeof localStorage === 'undefined') return
+		const stored = localStorage.getItem('targetLang')
+		if (stored) targetLang = stored
+		const browserLang = getLang()
+		if (browserLang) targetLang = browserLang
+	})
+
+	$effect(() => {
+		if (typeof localStorage === 'undefined') return
+		localStorage.setItem('targetLang', targetLang)
+	})
 
 	if (typeof localStorage !== 'undefined') {
 		const stored = localStorage.getItem('words')
