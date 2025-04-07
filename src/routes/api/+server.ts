@@ -2,25 +2,21 @@ import type { WordDef } from '$lib/types'
 import { json } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 import { DICT_KEY } from '$env/static/private'
-import { fetchKV, storeKV } from '$lib/kv.server'
+import { translate } from '$lib/translate.server'
 
 export const GET: RequestHandler = async ({ url: { searchParams } }) => {
 	const phrase = searchParams.get('phrase')
-	if (!phrase || phrase.length < 2) return json({ phrase: null })
+	const target = searchParams.get('target')
+	if (!phrase || phrase.length < 2 || !target) return json({ phrase: null })
 
-	// check if it's cached to KV
-	const cached = await fetchKV(phrase)
-	if (cached) return json(cached)
-
-	// otherwise, call API
-	const meaning = await callAPI(phrase)
-	await storeKV(phrase, meaning)
-
-	return json(meaning)
+	return json({
+		def: await define(phrase),
+		translated: await translate([phrase], target)
+	})
 }
 
-async function callAPI(phrase: string): Promise<WordDef[]> {
-	return await fetch(
+async function define(phrase: string): Promise<WordDef[]> {
+	return fetch(
 		`https://www.dictionaryapi.com/api/v3/references/learners/json/${phrase}?key=${DICT_KEY}`
 	)
 		.then(res => res.json())
