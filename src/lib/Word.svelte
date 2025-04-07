@@ -17,16 +17,16 @@
 </script>
 
 <div
-	class="mb-2 flex max-w-md flex-col rounded-2xl border border-slate-200 p-3 shadow-xs dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+	class="mb-2 flex max-w-md flex-col rounded-xl border border-stone-400 px-2 py-1 shadow-md dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100"
 >
 	<h2 class="flex items-center px-1 text-xl font-semibold">
 		{phrase}
-		<span class="font-mono text-sm font-light italic text-slate-600 dark:text-slate-400">
+		<span class="font-mono text-sm font-light italic text-stone-600 dark:text-stone-400">
 			{pronunciation}
 		</span>
 
 		{#if translated}
-			<span class="ml-auto text-sm font-light text-slate-600 dark:text-slate-400">
+			<span class="ml-auto text-sm font-light text-stone-600 dark:text-stone-400">
 				{translated}
 			</span>
 		{/if}
@@ -40,19 +40,19 @@
 		</audio>
 	{/if}
 
-	<ul class="list-inside list-disc pb-1 text-sm text-slate-800 dark:text-slate-100">
+	<ul class="list-inside list-disc pb-1 text-sm text-stone-800 dark:text-stone-100">
 		{#each meanings as { func, shortdef, sentence }}
 			<li
-				class="mt-3 list-none rounded-xl border border-slate-100 bg-slate-50 px-1 shadow-xs dark:border-none dark:bg-slate-800"
+				class="mt-3 list-none rounded-xl border border-stone-100 bg-stone-50 px-1 py-2 shadow-xs dark:border-none dark:bg-stone-700 flex flex-col gap-2"
 			>
 				{#if func}
-					<p class="py-1 text-xs italic text-slate-500">{func}</p>
+					<i class="text-xs text-stone-400">{func}</i>
 				{/if}
 				{#if shortdef}
-					<p class="py-1 pl-1">{shortdef}</p>
+					<p class="pl-1">{shortdef}</p>
 				{/if}
 				{#if sentence}
-					<p class="py-1 pl-1 text-sm text-slate-600 dark:text-slate-100">‟{sentence}”</p>
+					<p class="pl-1 text-sm text-stone-600 dark:text-stone-100">‟{sentence}”</p>
 				{/if}
 			</li>
 		{/each}

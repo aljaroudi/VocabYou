@@ -25,10 +25,10 @@
 	}
 </script>
 
-<div class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-slate-100">
+<div class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-stone-100">
 	<input
 		type="text"
-		class="w-full rounded-lg border border-slate-200 px-2 shadow-xs dark:border-slate-500 dark:bg-slate-900"
+		class="w-full rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
 		placeholder="Learn a new word..."
 		onkeydown={e => {
 			if (e.key !== 'Enter') return
@@ -47,7 +47,7 @@
 		}}
 	/>
 	<select
-		class="rounded-lg border border-slate-200 px-2 shadow-xs dark:border-slate-500 dark:bg-slate-900"
+		class="rounded-lg border border-stone-200 px-2 shadow-xs dark:border-stone-500 dark:bg-stone-900"
 		bind:value={targetLang}
 	>
 		{#each langs as [value, label]}
