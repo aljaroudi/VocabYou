@@ -1,12 +1,9 @@
 <script lang="ts">
-	import { audioLink, extractSentence, type WordDef } from './types'
+	import type { APIResponse } from './types'
+	import { audioLink, extractSentence } from './util'
 
-	interface Props {
-		word: readonly [string, WordDef[], string | undefined]
-	}
-
-	let { word }: Props = $props()
-	const [phrase, defs, translated] = word
+	let { phrase, word }: { phrase: string; word: APIResponse } = $props()
+	const { def: defs, translated } = word
 	const meanings = defs
 		.filter(w => w.shortdef.length > 0 && w.shortdef[0].length > 10)
 		.slice(0, 3)
