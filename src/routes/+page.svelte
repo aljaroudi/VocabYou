@@ -38,9 +38,7 @@
 			loading = true
 			await fetch(`/api?phrase=${text}&target=${targetLang}`)
 				.then(res => res.json())
-				.then((data: APIResponse) => {
-					words.set(text, data)
-				})
+				.then((data: APIResponse) => words.set(text, data))
 				.catch(() => alert('Failed'))
 
 			e.currentTarget.value = ''
