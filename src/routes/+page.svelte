@@ -75,15 +75,21 @@
 			<option {value} selected={value === targetLang}>{label}</option>
 		{/each}
 	</select>
+	<button
+		class="rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
+		onclick={() => confirm('Are you sure you want to clear all?') && words.clear()}
+	>
+		Clear
+	</button>
 </div>
 <ul>
 	{#if loading}
-		<li class="text-center">Loading...</li>
+		<li class="text-center dark:text-stone-400">Loading...</li>
 	{/if}
 	{#each [...words].reverse() as [phrase, word] (phrase)}
 		<Word {phrase} {word} />
 	{/each}
 	{#if words.size === 0 && !loading}
-		<li class="text-center">Add a word to get started</li>
+		<li class="text-center dark:text-stone-400">Add a word to get started</li>
 	{/if}
 </ul>
