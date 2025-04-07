@@ -4,20 +4,40 @@
         "العربية"
     ],
     [
-        "zh-CN",
-        "中文（简体）"
+        "cs",
+        "Čeština"
     ],
     [
-        "zh-TW",
-        "中文（繁體）"
+        "de",
+        "Deutsch"
+    ],
+    [
+        "es",
+        "Español"
+    ],
+    [
+        "fa",
+        "فارسی"
     ],
     [
         "fr",
         "Français"
     ],
     [
-        "de",
-        "Deutsch"
+        "fr-CA",
+        "Français 🇨🇦"
+    ],
+    [
+        "fr-FR",
+        "Français 🇫🇷"
+    ],
+    [
+        "id",
+        "Bahasa Indonesia"
+    ],
+    [
+        "it",
+        "Italiano"
     ],
     [
         "ja",
@@ -28,15 +48,27 @@
         "한국어"
     ],
     [
-        "fa",
-        "فارسی"
+        "ro",
+        "Română"
     ],
     [
-        "es",
-        "Español"
+        "ru",
+        "Русский"
     ],
     [
         "tr",
         "Türkçe"
+    ],
+    [
+        "yue",
+        "粵語"
+    ],
+    [
+        "zh-CN",
+        "简体中文"
+    ],
+    [
+        "zh-TW",
+        "繁體中文"
     ]
 ]
