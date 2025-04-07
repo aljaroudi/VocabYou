@@ -36,7 +36,7 @@
 			if (!text || text.length < 2) return
 
 			loading = true
-			void fetch(`/api?phrase=${text}&target=${targetLang}`)
+			await fetch(`/api?phrase=${text}&target=${targetLang}`)
 				.then(res => res.json())
 				.then((data: APIResponse) => {
 					words.set(text, data)
