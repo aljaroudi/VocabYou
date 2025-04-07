@@ -1,4 +1,4 @@
-export interface WordDef {
+export type WordDef = {
 	/** Metadata */
 	meta: Meta
 	/** Headword information */
@@ -18,7 +18,7 @@ export interface WordDef {
 	gram?: string
 }
 
-export interface Pronunciation {
+export type Pronunciation = {
 	ipa: string
 	/** audio playback information */
 	sound: {
@@ -27,7 +27,7 @@ export interface Pronunciation {
 	}
 }
 /** the change of form that words undergo in different grammatical contexts, such as tense or number */
-export interface Inflection {
+export type Inflection = {
 	/** inflection label spelled out, like `weird*os`  */
 	if: string
 	/** inflection label */
@@ -36,7 +36,7 @@ export interface Inflection {
 	prs?: Pronunciation[]
 }
 
-export interface Meta {
+export type Meta = {
 	id: string
 	/** if the headword is a key part of English vocabulary */
 	highlight?: 'yes'
@@ -45,7 +45,7 @@ export interface Meta {
 	offensive: boolean
 }
 /** [shortened view] a very abbreviated version of the entry that could be used in specialized contexts where a preview or shortened entry view is needed */
-export interface AppShortdef {
+export type AppShortdef = {
 	/** headword */
 	hw: string
 	/** functional label (noun, verb, ...) */
@@ -54,47 +54,7 @@ export interface AppShortdef {
 	def: string[]
 }
 
-export interface Target {
+export type Target = {
 	tuuid: string
 	tsrc: string
-}
-
-export function extractSentence(word: WordDef) {
-	if (!word.def) return []
-	const sentences: string[] = []
-
-	for (const { sseq } of word.def) {
-		if (!Array.isArray(sseq)) continue
-
-		for (const sub1 of sseq) {
-			if (!Array.isArray(sub1)) continue
-
-			for (const sub2 of sub1) {
-				if (!Array.isArray(sub2) || !(sub2[0] === 'sense')) continue
-
-				const dt = sub2[1]['dt']
-				if (!Array.isArray(dt)) continue
-
-				for (const item of dt) {
-					if (!Array.isArray(item) || item[0] !== 'vis') continue
-
-					for (const { t } of item[1]) {
-						// remove anything between { and }
-						sentences.push(t.replace(/{.*?}/g, ''))
-					}
-				}
-			}
-		}
-	}
-	return sentences
-}
-
-export function audioLink(word: WordDef) {
-	const audio = word.hwi.prs?.[0]?.sound?.audio
-	if (!audio) return undefined
-	return {
-		'audio/mp3': `https://media.merriam-webster.com/audio/prons/en/us/mp3/${audio[0]}/${audio}.mp3`,
-		'audio/wav': `https://media.merriam-webster.com/audio/prons/en/us/wav/${audio[0]}/${audio}.wav`,
-		'audio/ogg': `https://media.merriam-webster.com/audio/prons/en/us/ogg/${audio[0]}/${audio}.ogg`
-	}
 }
