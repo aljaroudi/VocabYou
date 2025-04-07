@@ -1,36 +1,11 @@
 <script lang="ts">
 	import Word from '$lib/Word.svelte'
-	import { getWord, getWords } from '$lib/store'
 	import langs from '$lib/langs.json'
+	import type { APIResponse } from '$lib/types'
+	import { SvelteMap } from 'svelte/reactivity'
 
-	let words = $derived(getWords())
-	let targetLang = $state<string>()
-
-	async function handleAddWord({ value }: EventTarget & HTMLInputElement) {
-		if (value.length < 2) return
-		words = await getWord(value.toLowerCase().trim())
-		value = ''
-	}
-
-	async function translate(texts: string[]): Promise<string[] | null> {
-		return await fetch(`/api/translate?texts=${texts.join(',')}&target=${targetLang}`)
-			.then(res => res.json())
-			.then(res => {
-				if (!Array.isArray(res) || typeof res[0] !== 'string') return null
-				return res.length === texts.length ? (res as string[]) : null
-			})
-			.catch(err => {
-				console.error(err)
-				return null
-			})
-	}
-
-	async function translated(_words: typeof words) {
-		const array = Array.from(_words)
-		const texts = array.map(([word]) => word)
-		const translated = await translate(texts)
-		return array.map(([word, defs], i) => [word, defs, translated?.at(i)] as const)
-	}
+	let words = new SvelteMap<string, APIResponse>()
+	let targetLang = $state('es')
 </script>
 
 <div class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-slate-100">
@@ -38,7 +13,19 @@
 		type="text"
 		class="w-full rounded-lg border border-slate-200 px-2 shadow-xs dark:border-slate-500 dark:bg-slate-900"
 		placeholder="Learn a new word..."
-		onkeydown={e => e.key === 'Enter' && handleAddWord(e.currentTarget)}
+		onkeydown={e => {
+			if (e.key !== 'Enter') return
+			const text = e.currentTarget.value.trim()
+			if (!text || text.length < 2) return
+
+			void fetch(`/api?phrase=${text}&target=${targetLang}`)
+				.then(res => res.json())
+				.then(data => {
+					words.set(text, data as APIResponse)
+					;(e.target as HTMLInputElement).value = ''
+				})
+				.catch(() => alert('Failed'))
+		}}
 	/>
 	<select
 		class="rounded-lg border border-slate-200 px-2 shadow-xs dark:border-slate-500 dark:bg-slate-900"
@@ -51,16 +38,10 @@
 </div>
 <ul>
 	{#if words.size > 0}
-		{#await translated(words)}
-			<li>Loading...</li>
-		{:then words}
-			{#each words as word}
-				<Word {word} />
-			{/each}
-		{:catch error}
-			<li>{error.message}</li>
-		{/await}
+		{#each words as [phrase, word]}
+			<Word {phrase} {word} />
+		{/each}
 	{:else}
-		<li class="text-center">it's mt...</li>
+		<li class="text-center">Add a word to get started</li>
 	{/if}
 </ul>
