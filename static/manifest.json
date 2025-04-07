@@ -3,7 +3,20 @@
 	"short_name": "VocabYou",
 	"display": "standalone",
 	"start_url": "/",
-	"theme_color": "#E0E0E0",
-	"background_color": "#ffffff",
-	"icons": []
+	"theme_color": "#d6d3d1",
+	"background_color": "#d6d3d1",
+	"icons": [
+		{
+			"src": "/web-app-manifest-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/web-app-manifest-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
 }
