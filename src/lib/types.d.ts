@@ -61,5 +61,5 @@ export type Target = {
 
 type APIResponse = {
 	def: WordDef[]
-	translated: string[] | null
+	translated: string | null
 }
