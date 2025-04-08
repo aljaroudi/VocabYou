@@ -52,16 +52,23 @@
 	onsubmit={async e => {
 		if (!(e.target instanceof HTMLFormElement)) return
 		e.preventDefault()
-		loading = true
 		const phrase = new FormData(e.target).get('phrase')?.toString()
 		if (!phrase) return
+		if (phrase && words.has(phrase)) {
+			words.delete(phrase)
+			words.set(phrase, words.get(phrase)!)
+			e.target.reset()
+			if (e.currentTarget) e.currentTarget.blur()
+			return
+		}
+		loading = true
 		await fetch(`/api?phrase=${phrase}&target=${targetLang}`)
 			.then(res => res.json())
 			.then((data: APIResponse) => words.set(phrase, data))
 			.catch(() => alert('Failed'))
 		loading = false
 		e.target.reset()
-		e.target.blur()
+		if (e.currentTarget) e.currentTarget.blur()
 	}}
 >
 	<input
