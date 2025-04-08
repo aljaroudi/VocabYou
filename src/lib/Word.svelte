@@ -1,19 +1,20 @@
 <script lang="ts">
-	import type { APIResponse } from './types'
+	import type { APIResponse } from '$lib/api.server'
 	import { audioLink, extractSentence } from './util'
 
 	let { phrase, word }: { phrase: string; word: APIResponse } = $props()
 	const { def: defs, translated } = word
 	const meanings = defs
 		.filter(w => w.shortdef.length > 0 && w.shortdef[0].length > 10)
-		.slice(0, 3)
+		.slice(0, 5)
 		.map(meaning => ({
 			func: meaning.fl,
 			shortdef: meaning.shortdef.at(0),
 			sentence: extractSentence(meaning).at(0)
 		}))
-	const audio = audioLink(defs[0])
-	const pronunciation = defs[0].hwi.prs?.[0].ipa ?? defs[0].hwi.hw
+	const firstDef = defs.at(0)
+	const audio = firstDef ? audioLink(firstDef) : undefined
+	const pronunciation = firstDef?.hwi?.prs?.[0]?.ipa ?? firstDef?.hwi?.hw
 </script>
 
 <div

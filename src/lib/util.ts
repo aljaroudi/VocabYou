@@ -1,4 +1,4 @@
-import type { WordDef } from './types'
+import type { WordDef } from './types-with-jsdoc'
 
 export function extractSentence(word: WordDef) {
 	if (!word.def) return []

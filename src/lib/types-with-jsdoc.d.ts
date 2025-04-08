@@ -53,13 +53,3 @@ export type AppShortdef = {
 	/** definition text for the first three senses */
 	def: string[]
 }
-
-export type Target = {
-	tuuid: string
-	tsrc: string
-}
-
-type APIResponse = {
-	def: WordDef[]
-	translated: string[] | null
-}
