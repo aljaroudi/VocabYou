@@ -3,8 +3,6 @@
 	"short_name": "VocabYou",
 	"display": "standalone",
 	"start_url": "/",
-	"theme_color": "#d6d3d1",
-	"background_color": "#d6d3d1",
 	"icons": [
 		{
 			"src": "/web-app-manifest-192x192.png",
