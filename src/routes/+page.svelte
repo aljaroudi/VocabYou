@@ -1,4 +1,5 @@
 <script lang="ts">
+	import IconLoading from '$lib/IconLoading.svelte'
 	import Word from '$lib/Word.svelte'
 	import type { APIResponse } from '$lib/api.server'
 	import langs from '$lib/langs.json'
@@ -95,8 +96,10 @@
 	</button>
 </form>
 <ul>
-	{#if loading}
-		<li class="text-center dark:text-stone-400">Loading...</li>
+	{#if loading || true}
+		<li class="mx-auto flex py-2 items-center justify-center text-stone-500">
+			<IconLoading />
+		</li>
 	{/if}
 	{#each [...words].reverse() as [phrase, word] (phrase)}
 		<Word
