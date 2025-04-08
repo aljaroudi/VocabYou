@@ -96,7 +96,7 @@
 	</button>
 </form>
 <ul>
-	{#if loading || true}
+	{#if loading}
 		<li class="mx-auto flex py-2 items-center justify-center text-stone-500">
 			<IconLoading />
 		</li>
