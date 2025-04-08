@@ -21,7 +21,7 @@ export type WordDef = {
 export type Pronunciation = {
 	ipa: string
 	/** audio playback information */
-	sound: {
+	sound?: {
 		/** base filename for audio playback */
 		audio: string
 	}

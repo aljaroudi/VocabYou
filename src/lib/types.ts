@@ -28,7 +28,7 @@ const schema = type
 		},
 		Pronunciation: {
 			ipa: 'string',
-			sound: {
+			'sound?': {
 				audio: 'string'
 			}
 		},
