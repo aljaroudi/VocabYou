@@ -2,15 +2,26 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 		/>
-		<link rel="manifest" href="/manifest.json" />
-		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="%sveltekit.assets%/manifest.json" />
+		<!-- icons -->
+		<link rel="shortcut icon" href="%sveltekit.assets%/favicon.ico" />
+		<link rel="icon" type="image/png" href="%sveltekit.assets%/favicon-96x96.png" sizes="96x96" />
+		<link rel="apple-touch-icon" sizes="180x180" href="%sveltekit.assets%/apple-touch-icon.png" />
+		<!-- colors -->
+		<meta
+			name="theme-color"
+			content="oklch(21.6% 0.006 56.043)"
+			media="(prefers-color-scheme: dark)"
+		/>
+		<meta
+			name="theme-color"
+			content="oklch(86.9% 0.005 56.366)"
+			media="(prefers-color-scheme: light)"
+		/>
 		<meta name="apple-mobile-web-app-title" content="VocabYou" />
 		<title>VocabYou</title>
 		%sveltekit.head%
