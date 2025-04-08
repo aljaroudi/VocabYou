@@ -78,7 +78,7 @@
 		{/each}
 	</select>
 	<button
-		class="rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
+		class="rounded border border-rose-400 px-2 shadow-xs dark:border-rose-900 dark:bg-rose-900/30"
 		onclick={() => confirm('Are you sure you want to clear all?') && words.clear()}
 	>
 		Clear
