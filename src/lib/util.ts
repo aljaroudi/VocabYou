@@ -43,18 +43,3 @@ export function audioLink(word: WordDef) {
 export function isStrArray(arr: unknown): arr is string[] {
 	return Array.isArray(arr) && arr.every(item => typeof item === 'string')
 }
-
-export async function definePhrase(phrase: string) {
-	phrase = phrase.toLowerCase().trim()
-	if (phrase.length === 0) return
-	return fetch('/api?phrase=' + phrase)
-		.then(res => res.json())
-		.then(def => {
-			if (typeof def[0][0] === 'string') return null
-			return def as WordDef[]
-		})
-		.catch(err => {
-			console.error('Failed to fetch word:', err)
-			return null
-		})
-}
