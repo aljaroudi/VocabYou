@@ -62,8 +62,10 @@
 				.then((data: APIResponse) => words.set(text, data))
 				.catch(() => alert('Failed'))
 
-			e.currentTarget.value = ''
-			e.currentTarget.blur()
+			if (e.currentTarget) {
+				e.currentTarget.value = ''
+				e.currentTarget.blur()
+			}
 			loading = false
 		}}
 	/>
