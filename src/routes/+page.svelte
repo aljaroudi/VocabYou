@@ -73,7 +73,7 @@
 		oninput={e => {
 			const input = e.target as HTMLInputElement
 			const value = input.value
-			const sanitized = value.replace(/[^a-zA-Z ]/g, '')
+			const sanitized = value.replace(/[^a-zA-Z ]/g, '').trimStart()
 			if (value !== sanitized) input.value = sanitized
 		}}
 		title="Only English letters are allowed"
