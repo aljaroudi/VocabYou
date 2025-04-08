@@ -1,5 +1,3 @@
-import type { translate } from './translate.server'
-
 export type WordDef = {
 	/** Metadata */
 	meta: Meta
@@ -54,14 +52,4 @@ export type AppShortdef = {
 	fl: string
 	/** definition text for the first three senses */
 	def: string[]
-}
-
-export type Target = {
-	tuuid: string
-	tsrc: string
-}
-
-type APIResponse = {
-	def: WordDef[]
-	translated: Awaited<ReturnType<typeof translate>>
 }
