@@ -69,6 +69,14 @@
 		placeholder="Learn a new word..."
 		name="phrase"
 		minlength={2}
+		pattern="[a-zA-Z ]+"
+		oninput={e => {
+			const input = e.target as HTMLInputElement
+			const value = input.value
+			const sanitized = value.replace(/[^a-zA-Z ]/g, '')
+			if (value !== sanitized) input.value = sanitized
+		}}
+		title="Only English letters are allowed"
 	/>
 	<select
 		class="rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
