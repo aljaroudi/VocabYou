@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Word from '$lib/Word.svelte'
+	import type { APIResponse } from '$lib/api.server'
 	import langs from '$lib/langs.json'
-	import type { APIResponse } from '$lib/types'
 	import { onMount } from 'svelte'
 	import { SvelteMap } from 'svelte/reactivity'
 
