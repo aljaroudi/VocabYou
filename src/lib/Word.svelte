@@ -25,7 +25,7 @@
 </script>
 
 <div
-	class="mb-2 flex max-w-md flex-col rounded-xl border border-stone-400 px-2 py-1 shadow-md dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100"
+	class="mb-2 flex max-w-md flex-col rounded-xl border border-stone-400 px-2 py-1 shadow-md dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100 group"
 >
 	<h2 class="flex items-center px-1 text-xl font-semibold">
 		{phrase}
@@ -69,7 +69,7 @@
 		<button class="p-2 text-rose-500" onclick={remove} type="button">
 			<IconTrash />
 		</button>
-		<button class="p-2" onclick={moveToTop} type="button">
+		<button class="p-2 group-first:hidden" onclick={moveToTop} type="button">
 			<IconArrowUp />
 		</button>
 	</div>
