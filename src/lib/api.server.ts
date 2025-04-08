@@ -27,8 +27,8 @@ export async function define(phrase: string): Promise<WordDef[]> {
 		.catch(() => [])
 }
 
-export async function getPhrase(phrase: string) {
-	const [def, translated] = await Promise.all([define(phrase), translate(phrase, 'en')])
+export async function getPhrase(phrase: string, target: string) {
+	const [def, translated] = await Promise.all([define(phrase), translate(phrase, target)])
 	return { def, translated }
 }
 

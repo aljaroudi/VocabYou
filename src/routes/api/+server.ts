@@ -7,5 +7,5 @@ export const GET: RequestHandler = async ({ url: { searchParams } }) => {
 	const target = searchParams.get('target')
 	if (!phrase || phrase.length < 2 || !target) return json({ success: false })
 
-	return json(await getPhrase(phrase))
+	return json(await getPhrase(phrase, target))
 }
