@@ -99,7 +99,15 @@
 		<li class="text-center dark:text-stone-400">Loading...</li>
 	{/if}
 	{#each [...words].reverse() as [phrase, word] (phrase)}
-		<Word {phrase} {word} />
+		<Word
+			{phrase}
+			{word}
+			remove={() => words.delete(phrase)}
+			moveToTop={() => {
+				words.delete(phrase)
+				words.set(phrase, word)
+			}}
+		/>
 	{/each}
 	{#if words.size === 0 && !loading}
 		<li class="text-center dark:text-stone-400">Add a word to get started</li>

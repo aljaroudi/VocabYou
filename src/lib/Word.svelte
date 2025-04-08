@@ -1,8 +1,15 @@
 <script lang="ts">
 	import type { APIResponse } from '$lib/api.server'
+	import IconArrowUp from './IconArrowUp.svelte'
+	import IconTrash from './IconTrash.svelte'
 	import { audioLink, extractSentence } from './util'
 
-	let { phrase, word }: { phrase: string; word: APIResponse } = $props()
+	let {
+		phrase,
+		word,
+		remove,
+		moveToTop
+	}: { phrase: string; word: APIResponse; remove: VoidFunction; moveToTop: VoidFunction } = $props()
 	const { def: defs, translated } = word
 	const meanings = defs
 		.filter(w => w.shortdef.length > 0 && w.shortdef[0].length > 10)
@@ -58,4 +65,12 @@
 			</li>
 		{/each}
 	</ul>
+	<div class="flex justify-between gap-2 px-2">
+		<button class="p-2 text-rose-500" onclick={remove} type="button">
+			<IconTrash />
+		</button>
+		<button class="p-2" onclick={moveToTop} type="button">
+			<IconArrowUp />
+		</button>
+	</div>
 </div>
