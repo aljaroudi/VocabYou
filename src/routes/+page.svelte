@@ -46,28 +46,29 @@
 	}
 </script>
 
-<div class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-stone-100">
+<form
+	class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-stone-100"
+	onsubmit={async e => {
+		if (!(e.target instanceof HTMLFormElement)) return
+		e.preventDefault()
+		loading = true
+		const phrase = new FormData(e.target).get('phrase')?.toString()
+		if (!phrase) return
+		await fetch(`/api?phrase=${phrase}&target=${targetLang}`)
+			.then(res => res.json())
+			.then((data: APIResponse) => words.set(phrase, data))
+			.catch(() => alert('Failed'))
+		loading = false
+		e.target.reset()
+		e.target.blur()
+	}}
+>
 	<input
 		type="text"
 		class="w-full rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
 		placeholder="Learn a new word..."
-		onkeydown={async e => {
-			if (e.key !== 'Enter') return
-			const text = e.currentTarget.value.trim()
-			if (!text || text.length < 2) return
-
-			loading = true
-			await fetch(`/api?phrase=${text}&target=${targetLang}`)
-				.then(res => res.json())
-				.then((data: APIResponse) => words.set(text, data))
-				.catch(() => alert('Failed'))
-
-			if (e.currentTarget) {
-				e.currentTarget.value = ''
-				e.currentTarget.blur()
-			}
-			loading = false
-		}}
+		name="phrase"
+		minlength={2}
 	/>
 	<select
 		class="rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
@@ -80,10 +81,11 @@
 	<button
 		class="rounded border border-rose-400 px-2 shadow-xs dark:border-rose-900 dark:bg-rose-900/30"
 		onclick={() => confirm('Are you sure you want to clear all?') && words.clear()}
+		type="button"
 	>
 		Clear
 	</button>
-</div>
+</form>
 <ul>
 	{#if loading}
 		<li class="text-center dark:text-stone-400">Loading...</li>
