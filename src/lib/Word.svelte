@@ -12,8 +12,9 @@
 			shortdef: meaning.shortdef.at(0),
 			sentence: extractSentence(meaning).at(0)
 		}))
-	const audio = audioLink(defs[0])
-	const pronunciation = defs[0].hwi.prs?.[0].ipa ?? defs[0].hwi.hw
+	const firstDef = defs.at(0)
+	const audio = firstDef ? audioLink(firstDef) : undefined
+	const pronunciation = firstDef?.hwi?.prs?.[0]?.ipa ?? firstDef?.hwi?.hw
 </script>
 
 <div
