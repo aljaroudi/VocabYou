@@ -24,21 +24,20 @@
 	const pronunciation = firstDef?.hwi?.prs?.[0]?.ipa ?? firstDef?.hwi?.hw
 </script>
 
-<div
-	class="mb-2 flex max-w-md flex-col rounded-xl border border-stone-400 px-2 py-1 shadow-md dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100 group"
->
-	<h2 class="flex items-center px-1 text-xl font-semibold">
+<div id="word" class="flex w-full flex-col p-2 dark:text-stone-100 group rounded-lg">
+	<h2 class="items-center px-1 text-xl font-semibold">
 		{phrase}
-		<span class="font-mono text-sm font-light italic text-stone-600 dark:text-stone-400">
+	</h2>
+	<div class="flex justify-between items-center py-1">
+		<span class="text-sm font-light italic text-stone-600 dark:text-stone-400">
 			&nbsp;{pronunciation}
 		</span>
-
 		{#if translated}
-			<span class="ml-auto text-sm font-light text-stone-600 dark:text-stone-400">
+			<span class="text-sm font-light text-stone-600 dark:text-stone-400">
 				{translated}
 			</span>
 		{/if}
-	</h2>
+	</div>
 
 	{#if audio}
 		<audio controls class="w-full">
@@ -48,10 +47,10 @@
 		</audio>
 	{/if}
 
-	<ul class="list-inside list-disc pb-1 text-sm text-stone-800 dark:text-stone-100">
+	<ul class="flex flex-col gap-2 py-2 text-sm text-stone-800 dark:text-stone-100">
 		{#each meanings as { func, shortdef, sentence }}
 			<li
-				class="mt-3 list-none rounded-xl border border-stone-100 bg-stone-50 px-1 py-2 shadow-xs dark:border-none dark:bg-stone-700 flex flex-col gap-2"
+				class="list-none rounded-lg border border-stone-100 bg-stone-50 px-2 py-1 shadow-xs dark:border-none dark:bg-stone-700 flex flex-col gap-2"
 			>
 				{#if func}
 					<i class="text-xs text-stone-400">{func}</i>

@@ -48,7 +48,7 @@
 </script>
 
 <form
-	class="mx-auto flex h-12 w-full max-w-md gap-2 py-2 text-sm dark:text-stone-100"
+	class="mx-auto flex w-full max-w-md gap-2 p-2 mb-2 h-12 text-sm dark:text-stone-100"
 	onsubmit={async e => {
 		if (!(e.target instanceof HTMLFormElement)) return
 		e.preventDefault()
@@ -102,7 +102,7 @@
 		Clear
 	</button>
 </form>
-<ul>
+<ul class="flex flex-col gap-2">
 	{#if loading}
 		<li class="mx-auto flex py-2 items-center justify-center text-stone-500">
 			<IconLoading />
