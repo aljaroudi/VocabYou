@@ -1,10 +1,16 @@
-<script lang="ts">
+<script>
 	import '../app.css'
-	import type { Snippet } from 'svelte'
 
-	let { children }: { children: Snippet } = $props()
+	let { children } = $props()
 </script>
 
-<main class="flex h-full min-h-screen w-full flex-col items-center dark:bg-stone-900 bg-stone-300">
+<main class="flex flex-col items-center w-full h-dvh">
 	{@render children()}
 </main>
+
+<style>
+	main {
+		max-width: 80ch;
+		margin: 0 auto;
+	}
+</style>
