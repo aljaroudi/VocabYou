@@ -48,11 +48,11 @@
 </script>
 
 <form
-	class="mx-auto flex w-full max-w-md gap-2 p-2 mb-2 h-12 text-sm dark:text-stone-100"
+	class="flex w-full h-12 gap-2 p-2 mb-2 text-sm dark:text-stone-100"
 	onsubmit={async e => {
 		if (!(e.target instanceof HTMLFormElement)) return
 		e.preventDefault()
-		const phrase = new FormData(e.target).get('phrase')?.toString()
+		const phrase = new FormData(e.target).get('phrase')?.toString().trim()
 		if (!phrase) return
 		if (phrase && words.has(phrase)) {
 			words.delete(phrase)
@@ -73,7 +73,7 @@
 >
 	<input
 		type="text"
-		class="w-full rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
+		class="w-full px-2 border rounded shadow-xs border-stone-400 dark:border-stone-700 dark:bg-stone-900"
 		placeholder="Learn a new word..."
 		name="phrase"
 		minlength={2}
@@ -87,7 +87,7 @@
 		title="Only English letters are allowed"
 	/>
 	<select
-		class="rounded border border-stone-400 px-2 shadow-xs dark:border-stone-700 dark:bg-stone-900"
+		class="px-2 border rounded shadow-xs border-stone-400 dark:border-stone-700 dark:bg-stone-900"
 		bind:value={targetLang}
 	>
 		{#each langs as [value, label]}
@@ -95,16 +95,16 @@
 		{/each}
 	</select>
 	<button
-		class="rounded border border-rose-400 px-2 shadow-xs dark:border-rose-900 dark:bg-rose-900/30"
+		class="px-2 border rounded shadow-xs border-rose-400 dark:border-rose-900 dark:bg-rose-900/30"
 		onclick={() => confirm('Are you sure you want to clear all?') && words.clear()}
 		type="button"
 	>
 		Clear
 	</button>
 </form>
-<ul class="flex flex-col gap-2">
+<ul class="flex flex-col w-full gap-2">
 	{#if loading}
-		<li class="mx-auto flex py-2 items-center justify-center text-stone-500">
+		<li class="flex items-center justify-center py-2 mx-auto text-stone-500">
 			<IconLoading />
 		</li>
 	{/if}
