@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@google-cloud/translate": "^8.5.1",
 		"@vercel/analytics": "^1.5.0",
+		"@vercel/speed-insights": "^1.2.0",
 		"arktype": "^2.1.19"
 	}
 }
